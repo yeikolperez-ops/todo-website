@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<link rel="stylesheet" href="indexx.css">
+
+
+<title>Weekly Planner — Dual Mode</title>
+
+</head>
+<body>
+
+<div id="mainView" class="screen">
+  <div class="header">
+    <div class="title">Today's Tasks</div>
+    <div class="controls">
+      <button id="goEdit">Edit Planner</button>
+    </div>
+  </div>
+  <div id="todayTasks"></div>
+</div>
+
+<div id="editView" class="screen hidden">
+  <div class="header">
+    <div class="title">Weekly Planner — Edit Mode</div>
+    <div class="controls">
+      <button id="backToday">Back</button>
+    </div>
+  </div>
+
+  <form id="taskForm" style="display:flex;gap:8px;flex-wrap:nowrap;overflow-x:auto;margin-bottom:12px;">
+
+
+    <input id="taskName" type="text" placeholder="Task name" required />
+    <select id="taskCategory">
+      <option>General</option><option>Work</option><option>Study</option><option>Personal</option><option>Gym</option>
+    </select>
+    <select id="taskDay">
+      <option>Monday</option><option>Tuesday</option><option>Wednesday</option><option>Thursday</option>
+      <option>Friday</option><option>Saturday</option><option>Sunday</option>
+    </select>
+    <input id="startTime" type="time"/>
+    <input id="endTime" type="time"/>
+    <select id="recurring">
+      <option value="none">None</option><option value="daily">Daily</option>
+      <option value="weekly">Weekly</option><option value="monthly">Monthly</option>
+    </select>
+    <button class="add-task-button" type="submit">+ Add Task</button>
+  </form>
+
+  <div id="weekGrid" class="week-grid">
+    <div class="day-column" data-day="Monday"><h2>Monday</h2><div class="task-list"></div></div>
+    <div class="day-column" data-day="Tuesday"><h2>Tuesday</h2><div class="task-list"></div></div>
+    <div class="day-column" data-day="Wednesday"><h2>Wednesday</h2><div class="task-list"></div></div>
+    <div class="day-column" data-day="Thursday"><h2>Thursday</h2><div class="task-list"></div></div>
+    <div class="day-column" data-day="Friday"><h2>Friday</h2><div class="task-list"></div></div>
+    <div class="day-column" data-day="Saturday"><h2>Saturday</h2><div class="task-list"></div></div>
+    <div class="day-column" data-day="Sunday"><h2>Sunday</h2><div class="task-list"></div></div>
+  </div>
+</div>
+<!-- BIG COMPLETE OVERLAY + AUDIO (REPLACEMENT) -->
+<div id="completeOverlay" class="hidden" aria-hidden="true" style="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;z-index:9999">
+  <div id="completeOverlayInner" style="pointer-events:auto;text-align:center;padding:28px;border-radius:18px;background:linear-gradient(180deg,rgba(255,255,255,0.95), rgba(250,250,255,0.95));box-shadow:0 20px 60px rgba(15,23,42,0.25);">
+    <div id="completeBigText" style="font-size:72px;font-weight:900;color:#4a72ff;letter-spacing:2px;">COMPLETED</div>
+  </div>
+</div>
+
+<!-- REMINDER PROMPT (asks Yes / No) -->
+<div id="reminderPrompt" class="hidden" style="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:9998">
+  <div style="background:#fff;padding:20px;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,0.15);width:320px;max-width:90%;text-align:center;">
+    <div id="reminderPromptText" style="font-weight:700;margin-bottom:8px">Do you want to add a reminder to this task?</div>
+    <div id="reminderTaskInfo" style="font-size:13px;color:#666;margin-bottom:16px"></div>
+    
+    <div style="display:flex;gap:8px;justify-content:center">
+      <button id="reminderYesBtn" style="padding:8px 14px;border-radius:8px;border:none;background:#4a72ff;color:#fff;font-weight:700;cursor:pointer">Yes</button>
+      <button id="reminderNoBtn" style="padding:8px 14px;border-radius:8px;border:1px solid #ddd;background:#fff;color:#333;cursor:pointer">No</button>
+    </div>
+
+   
+  </div>
+</div>
+
+
+
+<!-- ALARM MODAL (when alarm rings) -->
+<div id="alarmModal" class="hidden" style="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:10000">
+  <div style="background:#fff;padding:20px;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,0.25);width:360px;max-width:92%;text-align:center;">
+    <div style="font-weight:800;font-size:20px;margin-bottom:8px">Reminder — <span id="alarmTaskName"></span></div>
+    <div style="font-size:13px;color:#666;margin-bottom:12px" id="alarmTaskTime"></div>
+    <div style="display:flex;gap:10px;justify-content:center">
+      <button id="alarmSnoozeBtn" style="padding:8px 12px;border-radius:8px;border:none;background:#ffb020;color:#fff;font-weight:700;cursor:pointer">Snooze 5 min</button>
+      <button id="alarmStopBtn" style="padding:8px 12px;border-radius:8px;border:1px solid #ddd;background:#fff;color:#333;cursor:pointer">Stop</button>
+    </div>
+  </div>
+</div>
+
+<!-- Hidden audio controller placeholder (WebAudio is used, but keep an element for fallback) -->
+<audio id="alarmSound" src="sounds/dumbbell.mp3"></audio>
+
+<script type="module" src="indexx.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+
+
+</body>
+</html>

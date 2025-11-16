@@ -1,0 +1,274 @@
+/* =========================
+   indexx.css — Cleaned & Fixed
+   Overwrite your existing indexx.css with this file.
+   ========================= */
+
+/* ---------- VARIABLES ---------- */
+:root{
+  --bg:#f5f6fb;
+  --card:#fff;
+  --muted:#888;
+  --accent:#4a72ff;
+  --surface:#ffffff;
+  --glass:rgba(255,255,255,0.6);
+  --shadow:0 6px 22px rgba(15,23,42,0.08);
+  --radius:12px;
+
+  --primary-gradient: linear-gradient(90deg, #4a6dff, #6f8fff);
+  --button-text:#fff;
+  --input-bg:#f8faff;
+  --input-border:#d4d9e2;
+  --input-focus-border:#4a72ff;
+}
+
+/* ---------- RESET / BASE ---------- */
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;background:var(--bg);color:#111}
+.screen{padding:18px;max-width:900px;margin:22px auto;}
+.hidden{display:none !important;}
+.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.title{font-size:20px;font-weight:700}
+.controls{display:flex;gap:8px;align-items:center}
+button{cursor:pointer;border-radius:8px;border:0;background:transparent;padding:8px 10px}
+
+/* ---------- TASK / LAYOUT ---------- */
+.task{
+  background: rgba(255,255,255,0.95);
+  border-radius:10px;
+  padding:8px;
+  margin:6px 0;
+  position:relative;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  transition:0.16s;
+  box-shadow: 0 1px 6px rgba(15,23,42,0.04);
+}
+.task:hover{transform:translateY(-2px)}
+.task.done{opacity:0.55;filter:grayscale(0.05);}
+
+/* inline task info */
+.task-info{display:flex;flex-direction:column;gap:4px;cursor:pointer}
+.task-info .name{font-weight:600}
+.task-info .details{font-size:12px;color:var(--muted)}
+
+/* toolbar hidden until hover */
+.task-toolbar{display:none;gap:6px;align-items:center}
+.task:hover .task-toolbar{display:flex}
+.task-toolbar button{padding:6px 8px;border-radius:8px;background:#f1f5ff;border:none;font-size:13px}
+
+/* editor */
+.task-editor{margin-top:8px;display:flex;gap:8px;align-items:center}
+.task-editor input, .task-editor select{padding:6px;border-radius:8px;border:1px solid #e3e6ef;font-size:13px;background:#fff}
+.task-editor button{padding:6px 10px;border-radius:8px;background:var(--accent);color:#fff;border:none;font-weight:700}
+
+/* ---------- WEEK GRID (edit mode) ---------- */
+.week-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:10px;margin-top:14px}
+.day-column{min-height:400px;background:var(--card);border-radius:12px;padding:10px;display:flex;flex-direction:column;box-shadow:var(--shadow)}
+.day-column h2{text-align:center;margin:6px 0 8px;font-size:14px}
+.task-list{flex:1;overflow:auto;padding-bottom:6px}
+
+/* subtle per-day gradient accents */
+[data-day="Monday"]{background: linear-gradient(180deg,#fff5ff 0%, #fff 100%)}
+[data-day="Tuesday"]{background: linear-gradient(180deg,#f3fbff 0%, #fff 100%)}
+[data-day="Wednesday"]{background: linear-gradient(180deg,#f6fff5 0%, #fff 100%)}
+[data-day="Thursday"]{background: linear-gradient(180deg,#fffaf0 0%, #fff 100%)}
+[data-day="Friday"]{background: linear-gradient(180deg,#fff5f5 0%, #fff 100%)}
+[data-day="Saturday"]{background: linear-gradient(180deg,#fafbff 0%, #fff 100%)}
+[data-day="Sunday"]{background: linear-gradient(180deg,#eef6ff 0%, #fff 100%)}
+
+/* ---------- FORM / CONTROLS ---------- */
+#taskForm{
+  display:flex;
+  gap:10px;
+  flex-wrap:nowrap;
+  overflow-x:auto;
+  padding:12px;
+  background:#fff;
+  border-radius:12px;
+  border:1px solid #eef2fb;
+  box-shadow: 0 4px 16px rgba(15,23,42,0.04);
+}
+#taskForm input[type="text"],
+#taskForm input[type="time"],
+#taskForm select {
+  border-radius: 8px;
+  border: 1px solid var(--input-border);
+  background: var(--input-bg);
+  color: #1c2534;
+  transition: 0.18s;
+  white-space: nowrap;
+  padding:8px;
+}
+#taskForm input:hover,
+#taskForm select:hover { border-color: #a3b5ff; }
+#taskForm input:focus,
+#taskForm select:focus {
+  outline:none;
+  border-color:var(--input-focus-border);
+  box-shadow:0 0 0 4px rgba(74,114,255,0.12);
+  background:#fff;
+}
+.add-task-button {
+  background: var(--primary-gradient);
+  color: var(--button-text);
+  border-radius: 10px;
+  border: none;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: 0.18s;
+  padding:10px 14px;
+}
+.add-task-button:hover{ transform: translateY(-3px); box-shadow: 0 8px 20px rgba(74,114,255,0.12); }
+
+/* header action buttons */
+#goEdit, #backToday{
+  background:var(--primary-gradient);
+  color:var(--button-text);
+  padding:10px 16px;
+  border-radius:10px;
+  border:none;
+  font-weight:700;
+  cursor:pointer;
+  box-shadow:0 6px 18px rgba(74,114,255,0.18);
+}
+#goEdit:hover, #backToday:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 25px rgba(74,114,255,0.25);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+
+#completeBigText {
+  background: none !important;   /* remove any background */
+  color: #4a72ff;               /* keep your text color */
+  font-weight: 900;
+  font-size: 72px;
+  letter-spacing: 2px;
+  padding: 0 !important;
+}
+#completeOverlayInner {
+  background: rgba(255,255,255,0) !important;
+  box-shadow: none !important;
+}
+
+
+
+/* ---------- OVERLAYS & TOOLTIPS ---------- */
+
+/* big complete overlay */
+#completeOverlay.hidden { display:none !important; }
+#completeOverlay{ transition:opacity .22s ease; opacity:0; pointer-events:none; }
+#completeOverlay.show{ opacity:1; pointer-events:auto; }
+
+/* inner animation */
+#completeOverlayInner{ transform:scale(.98); transition:transform .22s ease; }
+#completeOverlay.show #completeOverlayInner{ transform:scale(1); }
+
+/* reminder / alarm modals hidden class already defined above */
+#reminderPrompt.hidden, #alarmModal.hidden { display:none !important; }
+
+/* tooltip for icon buttons — data-tooltip attribute used in JS */
+button[data-tooltip]{ position:relative; }
+button[data-tooltip]:hover::after{
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  background: rgba(20,20,30,0.95);
+  color:#fff;
+  padding:6px 8px;
+  font-size:12px;
+  border-radius:6px;
+  box-shadow:0 6px 18px rgba(0,0,0,0.16);
+  z-index:2000;
+  pointer-events:none;
+}
+button[data-tooltip]:hover::before{
+  content: "";
+  position:absolute;
+  bottom: calc(100% + 2px);
+  left:50%;
+  transform:translateX(-50%) rotate(45deg);
+  width:10px;height:10px;background:rgba(20,20,30,0.95);z-index:1999;
+  pointer-events:none;
+}
+
+/* ensure toolbar buttons look consistent */
+.task-toolbar button{ padding:6px 8px;border-radius:8px;background:#f1f5ff;border:none;font-size:13px; }
+
+/* small screens: readable big text for complete overlay */
+@media (max-width:560px){
+  #completeBigText{ font-size:44px !important; }
+}
+
+/* ---------- RESPONSIVE OVERRIDES ---------- */
+
+/* Desktop wide layout (keep your original responsive breakpoints) */
+@media (min-width:1200px){
+  .screen{ max-width:1400px; padding:28px; margin:0 auto;}
+  .week-grid{ display:grid; grid-template-columns:repeat(7,1fr); gap:18px; }
+  .day-column{ min-height:500px; padding:16px; background:#fff !important; box-shadow:0 6px 24px rgba(15,23,42,0.06); border-radius:14px; }
+  #taskForm{ padding:16px; gap:12px; border-radius:14px; box-shadow:0 4px 20px rgba(0,0,0,0.06); border:1px solid #e9eef5; margin-bottom:18px; overflow-x:auto;}
+  #taskForm input, #taskForm select{ height:40px; min-width:140px; font-size:14px; padding:8px;}
+  #taskName{ min-width:260px; }
+  .add-task-button{ height:42px; padding:10px 20px; font-size:15px; margin-left:auto; box-shadow:0 6px 18px rgba(74,114,255,0.25); }
+  #goEdit, #backToday{ padding:16px 26px; box-shadow:0 6px 18px rgba(74,114,255,0.25); }
+}
+
+/* Tablet layout */
+@media (min-width:768px) and (max-width:1199px){
+  .screen{ max-width:100%; padding:20px; }
+  .week-grid{ display:grid; grid-template-columns:repeat(3,1fr); grid-template-rows:repeat(3,auto); gap:14px; }
+  .day-column:nth-child(7){ grid-column:1 / 2; }
+  .day-column{ min-height:345px; padding:14px; }
+  #taskForm{ display:grid; grid-template-columns:1fr 1fr; gap:10px; padding:14px; }
+  .add-task-button{ height:42px; padding:10px 20px; font-size:15px; margin-left:auto; }
+  #goEdit, #backToday{ padding:10px 18px; }
+}
+
+/* Mobile layout */
+@media (max-width:767px){
+  .header{ display:grid; grid-template-columns:1fr auto; align-items:center; }
+  .header .title{ font-size:18px; font-weight:700; }
+  .week-grid{ display:flex; flex-direction:column; gap:16px; }
+  .day-column{ width:100%; padding:14px; min-height:auto; border-radius:12px; box-shadow:0 2px 10px rgba(0,0,0,0.08); }
+  .day-column h2{ font-size:16px; text-align:left; }
+  #taskForm{ flex-direction:column; gap:10px; padding:14px; }
+  #taskForm input, #taskForm select{ width:100%; height:38px; font-size:14px; }
+  .add-task-button{ height:44px; font-size:16px; border-radius:10px; box-shadow:0 6px 16px rgba(74,114,255,0.3); }
+  #goEdit, #backToday{ padding:10px 18px; }
+}
+
+
+.task {
+  overflow: visible !important;
+}
+
+.task-list {
+  overflow: visible !important;
+}
+
+.task-toolbar {
+  position: relative;
+  z-index: 9999;
+}
+
+.delete-btn {
+  position: relative;
+  z-index: 99999 !important;
+}
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+
+#alarmModal.show {
+  animation: pulse 1s infinite;
+}
+
+/* ---------- end of file ---------- */
